@@ -7,6 +7,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle login
+    // add sanitizer and tokenizer
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
@@ -100,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="card card-outline card-primary">
         <div class="card-header">
           <p class="link-dark text-center link-offset-2 link-opacity-100 link-opacity-50-hover">
-            <h1 class="mb-0">Fix<b>IT</b></h1>
+            <h1 class="mb-0"><b>I</b>-SeRVE</h1>
           </p>
           
         </div>
@@ -124,10 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <div class="row">
               <div class="col-8 d-inline-flex align-items-center">
-                <div class="form-check">
+                <!-- <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
                   <label class="form-check-label" for="flexCheckDefault"> Remember Me </label>
-                </div>
+                </div> -->
               </div>
               
               <div class="col-4">
@@ -140,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
           </form>
           
-          <p class="mb-1"><a href="forgot-password.html">I forgot my password</a></p>
+          <!-- <p class="mb-1"><a href="forgot-password.html">I forgot my password</a></p> -->
          
         </div>
       </div>
