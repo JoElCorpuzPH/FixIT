@@ -28,6 +28,7 @@
       
 
       <?php
+      $request_overtime_safe = htmlspecialchars($request_overtime, ENT_QUOTES, 'UTF-8');
       if (isset($_SESSION['role_id']) &&
           in_array($_SESSION['role_id'], [1, 2], true)
         ) {
@@ -38,7 +39,7 @@
               <div class="card-header">
                 <div class="d-flex">
                   <p class="d-flex flex-column">
-                    <span class="fw-bold fs-5">{$request_overtime}</span> <span>Requests Overtime</span>
+                    <span class="fw-bold fs-5">{$request_overtime_safe}</span> <span>Requests Overtime</span>
                   </p>
                   <p class="ms-auto d-flex flex-column text-end">
                     <span class="text-success"> <i class="bi bi-arrow-up"></i> 33.1% </span>
