@@ -6,7 +6,7 @@ if (empty($_SESSION['logged_in'])) {
     exit;
 }
 
-require "../db.php";
+require "../config/db.php";
 
 $routes = [
         'dashboard' => [1, 2, 3],

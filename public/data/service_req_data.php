@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../../db.php";
+require_once __DIR__ . "/../../config/db.php";
 
 
 // Assuming $pdo and $loggedInEmployeeId are already defined in your session/handler

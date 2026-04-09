@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once __DIR__ . "/../../db.php"; 
+require_once __DIR__ . "/../../config/db.php";
 $ticket_id = isset($_POST['ticket_id']) ? $_POST['ticket_id'] : null;
 $remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : null;
 

@@ -9,7 +9,7 @@ if (ob_get_length()) ob_clean();
 header('Content-Type: application/json');
 
 // Include your database connection
-require_once __DIR__ . "/../../db.php"; 
+require_once __DIR__ . "/../../config/db.php";
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
