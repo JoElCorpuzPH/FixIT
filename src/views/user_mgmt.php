@@ -134,7 +134,7 @@ include '../src/handlers/user_mgmt_data.php';
                             <?php if (!empty($groupedUsers[$roleId])): ?>
                                 <?php foreach ($groupedUsers[$roleId] as $user): 
                                     // Fallback for empty profile_pic strings
-                                    $img = !empty($user['profile_pic']) ? $user['profile_pic'] : '../public/img/profile_pic/default.png';
+                                    $img = !empty($user['profile_pic']) ? $user['profile_pic'] : '/img/profile_pic/default.png';
                                 ?>
                                     <div class="card shadow-none border mb-2">
                                         <div class="card-body d-flex justify-content-between align-items-center">
