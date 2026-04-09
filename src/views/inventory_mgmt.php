@@ -1,5 +1,5 @@
 <?php
-include '../src/handlers/inventory_mgmt_data.php';
+include dirname(__DIR__,2). '/public/data/inventory_mgmt_data.php';
 ?>
 
 
@@ -58,7 +58,10 @@ include '../src/handlers/inventory_mgmt_data.php';
                                                     <i class="bi bi-cpu fs-3 text-secondary"></i>
                                                 </div>
                                                 <div>
-                                                    <h6 class="mb-0 fw-bold"><?php echo htmlspecialchars($item['article']); ?></h6>
+                                                    <h6 class="mb-0 fw-bold">
+                                                        <?php echo htmlspecialchars($item['article']); ?>
+                                                        <span class="btn btn-sm btn-<?php echo in_array($item['status_id'],[2,4]) ? 'danger' : 'secondary' ?>"><?php echo $itemStatuses[$item['status_id']]; ?>
+                                                    </h6>
                                                     <small class="text-muted d-block">
                                                         Property #: <?php echo htmlspecialchars($item['property_num']); ?> | 
                                                         S/N: <?php echo htmlspecialchars($item['serial_num']); ?>
@@ -73,7 +76,7 @@ include '../src/handlers/inventory_mgmt_data.php';
                                                 </div>
                                                 
                                                 <div class="btn-group">
-                                                    <?php if (in_array($item['status_id'], [1, 3])): ?>
+                                                    <?php if (in_array($item['status_id'], [1, 3,4])): ?>
                                                         <button class="btn btn-outline-secondary btn-sm edit-item-btn" 
                                                                 title="Edit Item"
                                                                 data-bs-toggle="modal" 
@@ -150,8 +153,8 @@ include '../src/handlers/inventory_mgmt_data.php';
                         <div class="col">
                             <label class="form-label">Status</label>
                             <select name="status_id" class="form-select" required>
-                                <?php foreach ($itemStatuses as $status): ?>
-                                    <option value="<?php echo $status['status_id']; ?>"><?php echo htmlspecialchars($status['status_name']); ?></option>
+                                <?php foreach ($itemStatuses as $status_id => $statusname): ?>
+                                    <option value="<?php echo $status_id; ?>"><?php echo htmlspecialchars($statusname); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -212,8 +215,8 @@ include '../src/handlers/inventory_mgmt_data.php';
                         <div class="col">
                             <label class="form-label">Status</label>
                             <select name="status_id" id="edit_status_id" class="form-select" required>
-                                <?php foreach ($itemStatuses as $status): ?>
-                                    <option value="<?php echo $status['status_id']; ?>"><?php echo htmlspecialchars($status['status_name']); ?></option>
+                                <?php foreach ($itemStatuses as $status_id => $statusname): ?>
+                                    <option value="<?php echo $status_id; ?>"><?php echo htmlspecialchars($statusname); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -242,14 +245,14 @@ document.addEventListener('DOMContentLoaded', function() {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const formData = new FormData(this);
-                fetch('../src/handlers/inventory_mgmt_data.php', {
+                fetch('data/inventory_mgmt_data.php', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message);
+                        // alert(data.message);
                         location.reload();
                     } else {
                         alert(data.message);
@@ -283,14 +286,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const formData = new FormData();
                 formData.append('action', 'delete');
                 formData.append('item_id', id);
-                fetch('../src/handlers/inventory_mgmt_data.php', {
+                fetch('data/inventory_mgmt_data.php', {
                     method: 'POST',
                     body: formData
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert(data.message);
+                        // alert(data.message);
                         location.reload();
                     } else {
                         alert(data.message);

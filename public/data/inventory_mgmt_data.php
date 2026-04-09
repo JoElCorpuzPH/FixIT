@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $checkStmt->execute([':id' => $item_id]);
             $item = $checkStmt->fetch();
 
-            if ($item && in_array($item['status_id'], [1, 3])) {
+            if ($item && in_array($item['status_id'], [1, 3, 4])) {
                 $sql = "UPDATE item SET 
                             device_id = :device_id, 
                             status_id = :status_id, 
@@ -101,8 +101,12 @@ try {
 
     // Fetch Item Statuses for dropdowns
     $statusStmt = $pdo->query("SELECT status_id, status_name FROM item_status ORDER BY status_id ASC");
-    $itemStatuses = $statusStmt->fetchAll(PDO::FETCH_ASSOC);
-
+    $itemStat = $statusStmt->fetchAll(PDO::FETCH_ASSOC);
+    $itemStatuses = [];
+    # error_log(print_r($itemStat,true));
+    foreach($itemStat as $i =>$itemStatus){
+        $itemStatuses[$itemStatus['status_id']] = $itemStatus['status_name'];
+    }
     // Grouping items by Device Type
     $inventoryData = [];
     foreach ($allItems as $row) {

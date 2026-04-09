@@ -105,8 +105,8 @@ if (array_key_exists($page, $routes)) {
     
     ?>
 </div>
-
-
+<!-- apexcharts -->
+<script src="/js/apexcharts.min.js"></script>
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
 <script src="/js/overlayscrollbars.browser.es6.min.js"></script>
 <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
@@ -116,8 +116,7 @@ if (array_key_exists($page, $routes)) {
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="/js/adminlte.js"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
-<!-- apexcharts -->
-<script src="/js/apexcharts.min.js"></script>
+
 <!-- ChartJS -->
 <script>
     const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
