@@ -1,16 +1,11 @@
 <?php
-$envConfig = require __DIR__ . "/../config/env.php";
-require_once __DIR__ . "/../src/security.php";
-Security::configureSession($envConfig['session']);
-session_start();
+require_once __DIR__ . "/../config/bootstrap.php";
 Security::sendSecurityHeaders();
 
 if (empty($_SESSION['logged_in'])) {
     header('Location: login.php');
     exit;
 }
-
-require __DIR__ . "/../config/db.php";
 
 $csrfToken = Security::generateCsrfToken();
 
@@ -51,7 +46,7 @@ if (array_key_exists($page, $routes)) {
     <meta name="color-scheme" content="light dark"/>
     <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)"/>
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)"/>
-    <meta name="csrf-token" content="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+    <meta name="csrf-token" content="<?php echo  htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
     <link
             rel="stylesheet"
             href="/css/index.css"

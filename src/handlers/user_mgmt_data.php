@@ -61,5 +61,3 @@ try {
     $statuses = [];
     $roles = [1 => 'Administration', 2 => 'Technical', 3 => 'Employee'];
 }
-
-?>

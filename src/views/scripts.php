@@ -252,9 +252,9 @@ function returnInventory(btn, ticketId) {
     include(dirname(__DIR__,2) . "/public/data/service_req_data.php");
     ?>
     if (typeof articleMap === 'undefined') {
-        var articleMap = <?= json_encode($articleMap, JSON_FORCE_OBJECT) ?>;
+        var articleMap = <?php echo  json_encode($articleMap, JSON_FORCE_OBJECT) ?>;
     } else {
-        articleMap = <?= json_encode($articleMap, JSON_FORCE_OBJECT) ?>;
+        articleMap = <?php echo  json_encode($articleMap, JSON_FORCE_OBJECT) ?>;
     }
     let activeFormId = '';
     const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));

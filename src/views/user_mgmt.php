@@ -188,7 +188,7 @@ include '../src/handlers/user_mgmt_data.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="addUserForm">
-                <?= Security::csrfField() ?>
+                <?php echo  Security::csrfField() ?>
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -266,7 +266,7 @@ include '../src/handlers/user_mgmt_data.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="editUserForm">
-                <?= Security::csrfField() ?>
+                <?php echo  Security::csrfField() ?>
                 <input type="hidden" name="employee_id" id="edit_employee_id">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>

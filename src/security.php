@@ -94,7 +94,11 @@ class Security
         header('X-Frame-Options: SAMEORIGIN');
         header('X-XSS-Protection: 1; mode=block');
         header('Referrer-Policy: strict-origin-when-cross-origin');
-        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data:; font-src 'self';");
+        header("Content-Security-Policy: default-src 'self';"
+        ." script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;"
+        ." style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;"
+        ." img-src 'self' data:;"
+        ." font-src 'self';");
     }
 
     /**

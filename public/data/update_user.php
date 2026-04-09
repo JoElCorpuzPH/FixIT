@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once __DIR__ . "/../../config/db.php";
+require_once __DIR__ . "/../../config/bootstrap.php";
 
 header('Content-Type: application/json');
 
@@ -8,8 +7,6 @@ Security::requireAuth();
 Security::requireRole([1]); // Admin only
 Security::requirePost();
 Security::requireCsrf();
-
-$envConfig = require __DIR__ . "/../../config/env.php";
 
 $employeeId = (int)($_POST['employee_id'] ?? 0);
 if ($employeeId <= 0) {
