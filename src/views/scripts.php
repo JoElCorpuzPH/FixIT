@@ -40,7 +40,7 @@
             <div class="modal-body text-center p-4">
                 <i class="bi bi-exclamation-circle text-warning mb-3" style="font-size: 3rem;"></i>
                 <h4 class="fw-bold">Confirm Acceptance</h4>
-                <p class="text-muted">Are you sure you want to accept this inventory request? You can only handle one task at a time.</p>
+                <p class="text-muted">Are you sure you want to accept this invetory request? You can only handle one task at a time.</p>
                 
                 <div class="d-flex justify-content-center gap-2 mt-4">
                     <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
@@ -158,21 +158,13 @@ document.getElementById('submitFinishBtn').addEventListener('click', function() 
 
 document.getElementById('irConfirmBtn').addEventListener('click', function() {
     if (!selectedInvId) return;
-    processAcceptance(this, '/data/accept_inv_request.php', selectedInvId, irModal);
+    processAcceptance(this, '../src/handlers/accept_inv_request.php', selectedInvId, irModal);
 });
-
-function returnInventory(btn,ticketID){
-    if(confirm('Item returned?')===true){
-        processAcceptance(btn,'/data/finish_inv_request.php', ticketID, null);
-    }
-}
 
 
 function processAcceptance(btn, handlerPath, id, modalObj) {
-    if(btn.length){
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
-}
 
     fetch(handlerPath, {
         method: 'POST',
@@ -185,18 +177,14 @@ function processAcceptance(btn, handlerPath, id, modalObj) {
             window.location.reload();
         } else {
             alert("Error: " + data.message);
-            if(btn.length){
             btn.disabled = false;
             btn.innerText = 'Yes, Accept it';
-}
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        if(modalObj != null){
-            modalObj.hide();
-        }
-        alert("A connection error occurred." + handlerPath);
+        modalObj.hide();
+        alert("A connection error occurred.");
     });
 }
 
@@ -264,8 +252,8 @@ function processAcceptance(btn, handlerPath, id, modalObj) {
             const articles = articleMap[selectedId];
 
             // Convert to array if it's an object, then iterate
-            Object.entries(articles).forEach(([id,article]) => {
-                articleSelect.add(new Option(article, id));
+            Object.values(articles).forEach(article => {
+                articleSelect.add(new Option(article, article));
             });
         } else {
             articleSelect.disabled = true;

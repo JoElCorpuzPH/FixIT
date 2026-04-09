@@ -9,7 +9,7 @@ if (ob_get_length()) ob_clean();
 header('Content-Type: application/json');
 
 // Include your database connection
-require_once __DIR__ . "/../../db.php"; 
+require_once __DIR__ . "/../../config/db.php";
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -58,6 +58,8 @@ try {
 
     // --- CASE 2: INVENTORY REQUEST ---
     } elseif ($form_type === 'inventory_request') {
+        $device_id = $_POST['device_id'] ?? '';
+        $item_id = $_POST['item_id'] ?? '';
         error_log(print_r($_POST,true));
         $item_id = $_POST['item_id'] ?? '';
         $purpose = $_POST['invDescription'] ?? '';

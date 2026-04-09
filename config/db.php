@@ -1,9 +1,9 @@
 <?php
 $host = "localhost";
-$dbname = "try";
-$user = "root";
-$pass = "";
-$port = "";
+$dbname = "tryfix";
+$user = "try";
+$pass = "qwerasdf1234";
+$port = "3356";
 
 try {
     $pdo = new PDO(
@@ -16,6 +16,6 @@ try {
     die("DB Connection Failed");
 }
 
-require(__DIR__ . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "helper.php");
+require(dirname(__DIR__) . DIRECTORY_SEPARATOR . "src" . DIRECTORY_SEPARATOR . "helper.php");
 
 $APP = new AppHelper($pdo);
