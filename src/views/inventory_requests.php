@@ -56,25 +56,26 @@ include '../src/handlers/inventory_request_data.php';
                 </div>
             </div>
 
-            <!-- ACTIVE JOB -->
-            <div class="col-md-5">
-                <?php if (!empty($activeJob)):
+            <!-- ACTIVE ITEM REQUEST -->
+            <!-- <div class="col-md-5">
+                <?php if (!empty($activeItemRequest)):
 
-                    $aProfilePic = !empty($activeJob['profile_pic']) ? htmlspecialchars($activeJob['profile_pic']) : 'dist/img/user-default.jpg';
-                    $aFullName   = htmlspecialchars($activeJob['first_name'] . ' ' . $activeJob['last_name']);
-                    $aDate       = date('M d, Y @ h:ia', strtotime($activeJob['created_at']));
-                    $aDept       = htmlspecialchars($activeJob['dept_name']);
-                    $aDesc       = htmlspecialchars($activeJob['description']);
+                    $aProfilePic = !empty($activeItemRequest['profile_pic']) ? htmlspecialchars($activeItemRequest['profile_pic']) : 'dist/img/user-default.jpg';
+                    $aFullName   = htmlspecialchars($activeItemRequest['first_name'] . ' ' . $activeItemRequest['last_name']);
+                    $aDate       = date('M d, Y @ h:ia', strtotime($activeItemRequest['date_borrowed']));
+                    $aDept       = htmlspecialchars($activeItemRequest['dept_name']);
+                    $aArticle       = htmlspecialchars($activeItemRequest['article']);
+                    $aDesc       = htmlspecialchars($activeItemRequest['description']);
                 ?>
 
                 <div class="card shadow-sm h-100 d-flex flex-column">
                     <div class="card-header">
                         <div class="row align-items-center">
                             <div class="col">
-                                <h3 class="m-0">Current Job Request</h3>
+                                <h3 class="m-0">Current Item Request</h3>
                             </div>
                             <div class="col-auto text-end">
-                                <button type="submit" class="btn btn-success rounded-pill">DONE</button>
+                                <button type="submit" id="irReturnBtn" class="btn btn-success rounded-pill">RETURN</button>
                             </div>
                         </div>
                         
@@ -88,6 +89,7 @@ include '../src/handlers/inventory_request_data.php';
                                 <p><strong>Name:</strong> <?= $aFullName ?></p>
                                 <p><strong>Date:</strong> <?= $aDate ?></p>
                                 <p><strong>Department:</strong> <?= $aDept ?></p>
+                                <p><strong>Item: <?= $aArticle ?></strong></p>
                                 <p><strong>Description:</strong> <?= $aDesc ?></p>
                             </div>
                         </div>
@@ -107,7 +109,7 @@ include '../src/handlers/inventory_request_data.php';
                 </div>
 
                 <?php endif; ?>
-            </div>
+            </div> -->
 
         </div>
         <!-- END ROW -->
@@ -116,7 +118,7 @@ include '../src/handlers/inventory_request_data.php';
 
         <br>
 
-        <!-- JOB REQUEST LIST -->
+        <!-- ITEM REQUEST LIST -->
         <div class="card mb-4 shadow-sm">
             <div class="card-header">
                 <h3 class="card-title">New Inventory Requests</h3>
@@ -143,15 +145,11 @@ include '../src/handlers/inventory_request_data.php';
                     $article     = htmlspecialchars($row['article']);
                     $description = htmlspecialchars($row['description']);
 
-                    if ($hasActiveTask) {
-                        $buttonClass = "border rounded p-2 text-muted opacity-50";
+                    /* if ($hasActiveTask) {
+                        $buttonClass = "btn btn-warning border rounded p-2 text-muted opacity-50";
                         $buttonStyle = "cursor:not-allowed;width:40px;height:40px;display:flex;align-items:center;justify-content:center;";
                         $onclick = "";
-                    } else {
-                        $buttonClass = "border rounded p-2 text-success";
-                        $buttonStyle = "cursor:pointer;width:40px;height:40px;display:flex;align-items:center;justify-content:center;";
-                        $onclick = "onclick='event.stopPropagation(); acceptJob({$row['i_ticket_id']})'";
-                    }
+                    } else */ 
             ?>
 
                 <div class="card mb-2 border shadow-none">
@@ -166,9 +164,7 @@ include '../src/handlers/inventory_request_data.php';
                         <div class="col">
                             <strong><?= $fullName ?></strong>
                         </div>
-                        <div class="<?= $buttonClass ?>" style="<?= $buttonStyle ?>" <?= $onclick ?>>
-                            <i class="bi bi-check-lg"></i>
-                        </div>
+                       
                     </div>
 
                     <div class="collapse" id="<?= $ticketID ?>">
@@ -186,11 +182,37 @@ include '../src/handlers/inventory_request_data.php';
                                 <div class="col-auto px-1">:</div>
                                 <div class="col"><?= $deptName ?></div>
                             </div>
+                            <div class="row mb-2 align-items-baseline">
+                                <div class="col-auto text-muted" style="width: 30px;"><i class="bi bi-building"></i></div>
+                                <div class="col-auto px-1" style="width: 120px;"><strong>Item</strong></div>
+                                <div class="col-auto px-1">:</div>
+                                <div class="col"><strong><?= $article ?></strong></div>
+                            </div>
                             <div class="row align-items-baseline">
                                 <div class="col-auto text-muted" style="width: 30px;"><i class="bi bi-chat-left-text"></i></div>
                                 <div class="col-auto px-1" style="width: 120px;"><strong>Description</strong></div>
                                 <div class="col-auto px-1">:</div>
                                 <div class="col"><?= $description ?></div>
+                            </div>
+                            <div class="row align-items-baseline">
+                                <?php
+                                if($row['status_id'] == 1){
+                                    ?>
+                                    <div class="btn btn-success border rounded rounded p-4" onclick="event.stopPropagation(); acceptInventory('<?php echo $row['i_ticket_id']; ?>')">
+                                        Accept
+                                    </div>
+                                   <?php
+                                }   else{
+                                    ?>
+                                    <div class="btn btn-primary border rounded rounded p-4" onclick="event.stopPropagation(); returnInventory(this,'<?php echo $row['i_ticket_id']; ?>')">
+                                        Return
+                                    </div>
+                                <?php
+                                }
+
+                                ?>
+                                
+                                
                             </div>
 
                         </div>

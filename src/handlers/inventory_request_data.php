@@ -25,6 +25,7 @@ $sqlInv = "SELECT
             ir.item_id,       -- Added item_id for the collapse trigger
             ir.description, 
             ir.updated_at,    -- Use the real column name here
+            ir.status_id,
             i.article,
             e.first_name, 
             e.last_name, 
@@ -34,8 +35,8 @@ $sqlInv = "SELECT
         JOIN item i ON ir.item_id = i.item_id
         JOIN employee e ON ir.requested_by_employee = e.employee_id
         JOIN department d ON e.dept_id = d.dept_id
-        WHERE ir.status_id = 1 
-        ORDER BY ir.updated_at ASC";
+        WHERE ir.status_id IN (1,2) --
+        ORDER BY ir.updated_at DESC";
 
 $stmtInv = $pdo->query($sqlInv);
 $inventoryRequests = $stmtInv->fetchAll();
@@ -46,4 +47,30 @@ $hasActiveTask = ($checkActive->fetchColumn() > 0);
 // foreach ($inventoryRequests as $row) {
 //     var_dump($row);
 // }
+
+/**
+ * FETCH CURRENT ACTIVE TASK
+ * This is the specific job the technician is currently handling.
+ */
+$activeItemSql = "SELECT 
+            ir.i_ticket_id, 
+            ir.item_id, i.article,
+            ir.description, 
+            ir.date_borrowed,
+            e.first_name, 
+            e.last_name, 
+            e.profile_pic,
+            d.dept_name
+        FROM inventory_request ir
+        JOIN employee e ON ir.requested_by_employee = e.employee_id
+        JOIN department d ON e.dept_id = d.dept_id
+        JOIN item i on ir.item_id = i.item_id
+        WHERE ir.given_by_employee = :eid 
+        AND ir.status_id = 2 
+        ORDER BY ir.updated_at DESC
+        LIMIT 1";
+
+$activeStmt = $pdo->prepare($activeItemSql);
+$activeStmt->execute(['eid' => $currentUserId]);
+$activeItemRequest = $activeStmt->fetch();
 ?>

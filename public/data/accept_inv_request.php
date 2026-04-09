@@ -9,9 +9,9 @@ if (!isset($_SESSION['employee_id'])) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized access.']);
     exit;
 }
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inventory_id'])) {
-    $inventoryId = $_POST['inventory_id'];
+// error_log(print_r($_POST,true));
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ticket_id'])) {
+    $inventoryId = $_POST['ticket_id'];
     $employeeId = $_SESSION['employee_id']; 
 
     try {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inventory_id'])) {
         // status_id = 1 (New/Pending), status_id = 2 (Approved/In Progress)
         $sql = "UPDATE inventory_request 
                 SET status_id = 2, 
-                    processed_by_employee = :eid,
+                    given_by_employee = :eid,
                     updated_at = NOW() 
                 WHERE i_ticket_id = :iid 
                 AND status_id = 1"; 
