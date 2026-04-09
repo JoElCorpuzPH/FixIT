@@ -29,8 +29,7 @@ try {
             <div class="direct-chat-msg" style="margin-bottom: 20px;">
                 <div class="direct-chat-infos clearfix">
                     <span class="direct-chat-name float-start">
-                        <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?> 
-                        <!-- <small class="text-muted">(ID: <?= htmlspecialchars($row['employee_id']) ?>)</small> -->
+                        <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?> >
                     </span>
                     <span class="direct-chat-timestamp float-end">
                         <strong>Rating: <?= htmlspecialchars($row['rating']) ?></strong> | 

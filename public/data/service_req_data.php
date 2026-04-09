@@ -40,7 +40,6 @@ $devices = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch only 'Available' items (status_id = 1)
 $itemStmt = $pdo->query("
-    SELECT i.item_id, i.device_id, i.article, s.status_name 
     SELECT i.device_id, i.item_id, i.article, s.status_name 
     FROM item i
     INNER JOIN item_status s ON i.status_id = s.status_id
