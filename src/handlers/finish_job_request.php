@@ -10,7 +10,6 @@ if (!$ticket_id || !$remarks) {
 }
 
 try {
-    // Note: Ensure you added the 'remarks' column to your job_request table!
     $sql = "UPDATE job_request 
             SET status_id = 3, 
                 remarks = :remarks, 

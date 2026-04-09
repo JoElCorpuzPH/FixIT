@@ -2,23 +2,30 @@
 $currentUserId = $_SESSION['employee_id'];
 $today = date('Y-m-d');
 
-// 1. New Job Requests (Status 1)
+// 1. New Job Requests (Status 1 - No one has taken it yet)
 $sqlNew = "SELECT COUNT(*) FROM job_request WHERE status_id = 1";
 $countNew = $pdo->query($sqlNew)->fetchColumn();
 
-// 2. Pending Job Requests (Status 2 - In Progress)
-$sqlPending = "SELECT COUNT(*) FROM job_request WHERE status_id = 2";
-$countPending = $pdo->query($sqlPending)->fetchColumn();
+// 2. Your Ongoing Task (Status 2 - You are currently working on it)
+$sqlPending = "SELECT COUNT(*) FROM job_request WHERE status_id = 2 AND taken_by_employee = :eid";
+$stmtPending = $pdo->prepare($sqlPending);
+$stmtPending->execute(['eid' => $currentUserId]);
+$countPending = $stmtPending->fetchColumn();
 
-// 3. Finished Job Requests TODAY (Status 3)
-// We use DATE(updated_at) to match only today's completed tasks
+// 3. Tasks you finished TODAY (Status 3 - Waiting for user feedback)
+// Technicians consider a task "Finished" once they move it to status 5
 $sqlFinished = "SELECT COUNT(*) FROM job_request 
                 WHERE status_id = 3 
+                AND taken_by_employee = :eid
                 AND DATE(updated_at) = :today";
 $stmtFinished = $pdo->prepare($sqlFinished);
-$stmtFinished->execute(['today' => $today]);
+$stmtFinished->execute(['today' => $today, 'eid' => $currentUserId]);
 $countFinished = $stmtFinished->fetchColumn();
 
+/**
+ * FETCH CURRENT ACTIVE TASK
+ * This is the specific job the technician is currently handling.
+ */
 $activeJobSql = "SELECT 
             jr.j_ticket_id, 
             jr.description,
@@ -32,15 +39,18 @@ $activeJobSql = "SELECT
         JOIN employee e ON jr.requested_by_employee = e.employee_id
         JOIN department d ON e.dept_id = d.dept_id
         WHERE jr.taken_by_employee = :eid 
-        AND jr.status_id = 2 -- Status 2 = In Progress
+        AND jr.status_id = 2 
         LIMIT 1";
 
 $activeStmt = $pdo->prepare($activeJobSql);
 $activeStmt->execute(['eid' => $currentUserId]);
 $activeJob = $activeStmt->fetch();
 
-
-$sql = "SELECT 
+/**
+ * FETCH ALL NEW TICKETS (QUEUE)
+ * Tickets that haven't been picked up by anyone yet.
+ */
+$sqlQueue = "SELECT 
             jr.j_ticket_id, 
             jr.description, 
             jr.request_type, 
@@ -49,7 +59,7 @@ $sql = "SELECT
             e.last_name, 
             e.profile_pic,
             d.dept_name,
-            rs.status_name -- Corrected from request_status to status_name
+            rs.status_name
         FROM job_request jr
         JOIN employee e ON jr.requested_by_employee = e.employee_id
         JOIN department d ON e.dept_id = d.dept_id
@@ -57,19 +67,8 @@ $sql = "SELECT
         WHERE jr.status_id = 1
         ORDER BY jr.created_at ASC";
         
+$jobRequests = $pdo->query($sqlQueue)->fetchAll();
 
-$stmt = $pdo->query($sql);
-$jobRequests = $stmt->fetchAll();
-
-// Check if this technician already has a job "In Progress" (Status 2 in most systems)
-$checkSql = "SELECT COUNT(*) FROM job_request 
-             WHERE taken_by_employee = :eid 
-             AND status_id = 2"; // Adjust '2' to your 'In Progress' ID
-$checkStmt = $pdo->prepare($checkSql);
-$checkStmt->execute(['eid' => $currentUserId]);
-$hasActiveTask = ($checkStmt->fetchColumn() > 0);
-
-// echo "Debug: Logged in ID is: " . $currentUserId . " | Has Active Task: " . ($hasActiveTask ? 'YES' : 'NO');
-
-
+// Flag to prevent technician from taking more than one job at a time
+$hasActiveTask = ($countPending > 0);
 ?>

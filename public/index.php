@@ -54,8 +54,6 @@ if (array_key_exists($page, $routes)) {
     <!--begin::Primary Meta Tags-->
     <meta name="title" content="I-SeRVE v4 | Dashboard"/>
     <meta name="author" content="ColorlibHQ"/>
-
-
     <!--end::Primary Meta Tags-->
     <!--begin::Accessibility Features-->
     <!-- Skip links will be dynamically added by accessibility.js -->
@@ -65,29 +63,28 @@ if (array_key_exists($page, $routes)) {
     <!--begin::Fonts-->
     <link
             rel="stylesheet"
-            href="css/index.css"
-            crossorigin="anonymous"
+            href="../public/css/index.css"
             media="print"
             onload="this.media='all'"/>
     <!--end::Fonts-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <link
             rel="stylesheet"
-            href="css/overlayscrollbars.min.css"
+            href="../public/css/overlayscrollbars.min.css"
             crossorigin="anonymous"/>
     <!--end::Third Party Plugin(OverlayScrollbars)-->
     <!--begin::Third Party Plugin(Bootstrap Icons)-->
     <link
             rel="stylesheet"
-            href="css/bootstrap-icons.min.css"
+            href="../public/css/bootstrap-icons.min.css"
             crossorigin="anonymous"/>
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="css/adminlte.css"/>
+    <link rel="stylesheet" href="../public/css/adminlte.css"/>
     <!--end::Required Plugin(AdminLTE)-->
     <!-- apexcharts -->
 
-    <link rel="stylesheet" href="css/apexcharts.css"/>
+    <link rel="stylesheet" href="../public/css/apexcharts.css"/>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg sidebar-open bg-body-tertiary">
@@ -100,25 +97,28 @@ if (array_key_exists($page, $routes)) {
     $file = dirname(__DIR__). DIRECTORY_SEPARATOR  . 'src' . DIRECTORY_SEPARATOR .  $template;
     if (file_exists($file)) {
         include $file;
+        include '../src/views/footer.php';
     } else {
         echo "<div class='p-4'>Error: File not found ($template)</div>";
     }
+
+    
     ?>
 </div>
+
+
 <!--begin::Third Party Plugin(OverlayScrollbars)-->
-<script
-        src="js/overlayscrollbars.browser.es6.min.js"></script>
+<script src="../public/js/overlayscrollbars.browser.es6.min.js"></script>
 <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->
-<script
-        src="js/popper.min.js"></script>
+<script src="../public/js/popper.min.js"></script>
 <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
-<script
-        src="js/bootstrap.min.js"
-></script>
-<!-- src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" -->
+<script src="../public/js/bootstrap.min.js"></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-<script src="js/adminlte.js"></script>
+<script src="../public/js/adminlte.js"></script>
 <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+<!-- apexcharts -->
+<script src="../public/js/apexcharts.min.js"></script>
+<!-- ChartJS -->
 <script>
     const SELECTOR_SIDEBAR_WRAPPER = '.sidebar-wrapper';
     const Default = {
@@ -140,185 +140,8 @@ if (array_key_exists($page, $routes)) {
     });
 </script>
 <!--end::OverlayScrollbars Configure-->
-
-
-<div class="modal" id="jrconfirmAcceptModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-            <div class="modal-body text-center p-4">
-                <i class="bi bi-exclamation-circle text-warning mb-3" style="font-size: 3rem;"></i>
-                <h4 class="fw-bold">Confirm Acceptance</h4>
-                <p class="text-muted">Are you sure you want to accept this job request? You can only handle one task at a time.</p>
-                
-                <div class="d-flex justify-content-center gap-2 mt-4">
-                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id="jrConfirmBtn" class="btn btn-success px-4">Yes, Accept it</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="jrFinishModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Job Completion Report</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <label for="jrRemarks" class="form-label">Remarks</label>
-                <textarea class="form-control" id="jrRemarks" rows="4" placeholder="Describe what was done..."></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" id="submitFinishBtn" class="btn btn-success">Submit & Finish</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="irconfirmAcceptModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-            <div class="modal-body text-center p-4">
-                <i class="bi bi-exclamation-circle text-warning mb-3" style="font-size: 3rem;"></i>
-                <h4 class="fw-bold">Confirm Acceptance</h4>
-                <p class="text-muted">Are you sure you want to accept this invetory request? You can only handle one task at a time.</p>
-                
-                <div class="d-flex justify-content-center gap-2 mt-4">
-                    <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" id="irConfirmBtn" class="btn btn-success px-4">Yes, Accept it</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<script>
-// Variables to store the selected IDs
-let selectedJobId = null;
-let selectedInvId = null;
-
-
-// Initialize Modals
-const jrModal = new bootstrap.Modal(document.getElementById('jrconfirmAcceptModal'));
-const jrFinishModal = new bootstrap.Modal(document.getElementById('jrFinishModal'));
-
-const irModal = new bootstrap.Modal(document.getElementById('irconfirmAcceptModal'));
-
-
-// --- JOB REQUEST LOGIC ---
-function acceptJob(ticketId) {
-    selectedJobId = ticketId;
-    jrModal.show();
-}
-
-document.getElementById('jrConfirmBtn').addEventListener('click', function() {
-    if (!selectedJobId) return;
-    processAcceptance(this, '../src/handlers/accept_job_request.php', selectedJobId, jrModal);
-});
-
-if(document.getElementById('jrFinishRequest')) {
-    document.getElementById('jrFinishRequest').addEventListener('click', function() {
-        jrFinishModal.show();
-    });
-}
-
-// --- INVENTORY REQUEST LOGIC ---
-function acceptInventory(ticketId) {
-    selectedInvId = ticketId;
-    irModal.show();
-}
-
-document.getElementById('submitFinishBtn').addEventListener('click', function() {
-    const remarks = document.getElementById('jrRemarks').value.trim();
-    const btn = this;
-
-    // DEBUG: Check values in console (F12)
-    console.log("Attempting to finish job...");
-    console.log("Ticket ID:", currentActiveJobTicketId);
-    console.log("Remarks:", remarks);
-
-    if (!currentActiveJobTicketId) {
-        alert("Error: No active ticket ID found. Please refresh the page.");
-        return;
-    }
-
-    if (!remarks) {
-        alert("Please enter remarks.");
-        return;
-    }
-
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Saving...';
-
-    fetch('../src/handlers/finish_job_request.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `ticket_id=${encodeURIComponent(currentActiveJobTicketId)}&remarks=${encodeURIComponent(remarks)}`
-    })
-    .then(response => {
-        // If PHP crashes, this helps you see the "messy" error
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        } else {
-            alert(data.message);
-            btn.disabled = false;
-            btn.innerText = "Submit & Finish";
-        }
-    })
-    .catch(err => {
-        console.error('Fetch error:', err);
-        alert("Connection error. Check console for details.");
-        btn.disabled = false;
-        btn.innerText = "Submit & Finish";
-    });
-});
-
-document.getElementById('irConfirmBtn').addEventListener('click', function() {
-    if (!selectedInvId) return;
-    processAcceptance(this, '../src/handlers/accept_inv_request.php', selectedInvId, irModal);
-});
-
-
-function processAcceptance(btn, handlerPath, id, modalObj) {
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
-
-    fetch(handlerPath, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'ticket_id=' + id
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.reload();
-        } else {
-            alert("Error: " + data.message);
-            btn.disabled = false;
-            btn.innerText = 'Yes, Accept it';
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        modalObj.hide();
-        alert("A connection error occurred.");
-    });
-}
-
-
-</script>
-
-
-
+<?php
+include '../src/views/scripts.php';
+?>
 </body>
-
 </html>

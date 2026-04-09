@@ -10,10 +10,10 @@ $countNew = $pdo->query($sqlNew)->fetchColumn();
 $sqlPending = "SELECT COUNT(*) FROM inventory_request WHERE status_id = 2";
 $countPending = $pdo->query($sqlPending)->fetchColumn();
 
-// 3. Finished Inventory  Requests TODAY (Status 3)
+// 3. Finished Inventory  Requests TODAY (Status 5)
 // We use DATE(updated_at) to match only today's completed tasks
 $sqlFinished = "SELECT COUNT(*) FROM inventory_request 
-                WHERE status_id = 3 
+                WHERE status_id = 5 
                 AND DATE(updated_at) = :today";
 $stmtFinished = $pdo->prepare($sqlFinished);
 $stmtFinished->execute(['today' => $today]);

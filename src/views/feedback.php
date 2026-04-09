@@ -2,12 +2,12 @@
 try {
     $sql = "SELECT 
             e.first_name, e.last_name, e.profile_pic, 
-            f.remarks, f.rating,
+            f.comments, f.rating,
             jr.updated_at
             FROM feedback f
             INNER JOIN job_request jr ON f.j_ticket_id = jr.j_ticket_id
             INNER JOIN employee e ON jr.requested_by_employee = e.employee_id
-            WHERE jr.status_id = 3
+            WHERE jr.status_id = 5
             ORDER BY f.feedback_id DESC";
              
     $stmt = $pdo->query($sql);
@@ -47,7 +47,7 @@ try {
                 
                 <!-- The actual feedback text -->
                 <div class="direct-chat-text">
-                    <?= htmlspecialchars($row['remarks']) ?>
+                    <?= htmlspecialchars($row['comments']) ?>
                 </div>
             </div>
             <!-- /.direct-chat-msg -->

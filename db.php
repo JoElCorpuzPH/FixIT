@@ -1,6 +1,6 @@
 <?php
 $host = "localhost";
-$dbname = "awd";
+$dbname = "try";
 $user = "root";
 $pass = "";
 $port = "";
