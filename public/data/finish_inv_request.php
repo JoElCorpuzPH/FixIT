@@ -1,24 +1,25 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 require_once __DIR__ . "/../../db.php"; 
 $ticket_id = isset($_POST['ticket_id']) ? $_POST['ticket_id'] : null;
-$remarks = isset($_POST['remarks']) ? trim($_POST['remarks']) : null;
 
-if (!$ticket_id || !$remarks) {
+if (!$ticket_id) {
     echo json_encode(['success' => false, 'message' => 'Missing required fields.']);
     exit;
 }
-
+$employeeId = $_SESSION['employee_id'];
 try {
-    $sql = "UPDATE job_request 
-            SET status_id = 3, 
-            
-                remarks = :remarks, 
+
+    $sql = "UPDATE inventory_request 
+            SET status_id = 5,
+                received_by_employee = :eid, 
+                date_returned = NOW(), 
                 updated_at = NOW() 
-            WHERE j_ticket_id = :tid";
+            WHERE i_ticket_id = :tid";
     $stmt = $pdo->prepare($sql);
     $success = $stmt->execute([
-        'remarks' => $remarks,
+        'eid' => $employeeId,
         'tid' => $ticket_id
     ]);
 

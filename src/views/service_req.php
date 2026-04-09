@@ -105,8 +105,8 @@ $jsonArticleMap = json_encode($articleMap ?? [], JSON_FORCE_OBJECT);
                                         </select>
                                     </div>
                                     <div class="mb-4 text-start">
-                                        <label for="articleSelect" class="form-label fw-bold fs-5">Available Articles</label>
-                                        <select id="articleSelect" name="article_name" class="form-select form-select-lg border-2 py-3" disabled required>
+                                        <label for="articleSelect" class="form-label fw-bold fs-5">Available Items</label>
+                                        <select id="articleSelect" name="item_id" class="form-select form-select-lg border-2 py-3" disabled required>
                                             <option selected disabled value="">Select device first</option>
                                         </select>
                                     </div>
