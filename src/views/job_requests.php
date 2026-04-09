@@ -215,6 +215,6 @@ include '../src/handlers/job_request_data.php';
 
 <script>
     // DEFINE THIS FIRST before the rest of the logic
-    const currentActiveJobTicketId = "<?php echo isset($activeJob['j_ticket_id']) ? $activeJob['j_ticket_id'] : ''; ?>";
+    const currentActiveJobTicketId = "<?php echo isset($activeJob['j_ticket_id']) ? (int)$activeJob['j_ticket_id'] : ''; ?>";
     console.log("Active Ticket ID set to:", currentActiveJobTicketId); // Debugging line
 </script>

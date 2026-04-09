@@ -13,7 +13,8 @@ try {
     $stmt = $pdo->query($sql);
     $feedbacks = $stmt->fetchAll();
 } catch (\PDOException $e) {
-    die("Database error: " . $e->getMessage());
+    error_log("Feedback Error: " . $e->getMessage());
+    $feedbacks = [];
 }
 
 ?>

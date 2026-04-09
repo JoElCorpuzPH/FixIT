@@ -198,13 +198,13 @@ include '../src/handlers/inventory_request_data.php';
                                 <?php
                                 if($row['status_id'] == 1){
                                     ?>
-                                    <div class="btn btn-success border rounded rounded p-4" onclick="event.stopPropagation(); acceptInventory('<?php echo $row['i_ticket_id']; ?>')">
+                                    <div class="btn btn-success border rounded p-4" onclick="event.stopPropagation(); acceptInventory('<?php echo (int)$row['i_ticket_id']; ?>')">
                                         Accept
                                     </div>
                                    <?php
                                 }   else{
                                     ?>
-                                    <div class="btn btn-primary border rounded rounded p-4" onclick="event.stopPropagation(); returnInventory(this,'<?php echo $row['i_ticket_id']; ?>')">
+                                    <div class="btn btn-primary border rounded p-4" onclick="event.stopPropagation(); returnInventory(this,'<?php echo (int)$row['i_ticket_id']; ?>')">
                                         Return
                                     </div>
                                 <?php
